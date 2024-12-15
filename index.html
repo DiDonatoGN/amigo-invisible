@@ -59,7 +59,7 @@
   <script>
     const nameMapping = {
       'guille': 'Guillermo',
-      'sofi': 'Sofia',
+      'sofia': 'Sofia',
       'sofy': 'Sofia',
       'so': 'Sofia',
       'lu': 'Lucia',
@@ -80,16 +80,18 @@
       'franquito': 'Franco'
     };
 
-    const santaPairs = {
-      'Guillermo': 'Karina',
-      'Sofia': 'Gustavo',
-      'Lucia': 'Alicia',
-      'Karina': 'Lia',
-      'Gustavo': 'Franco',
-      'Alicia': 'Sofia',
-      'Lia': 'Guillermo',
-      'Franco': 'Lucia'
-    };
+    // Generación aleatoria de asignaciones (aseguradas para ser fijas y reproducibles)
+    const fixedSantaPairs = (() => {
+      const participants = ['Guillermo', 'Sofia', 'Lucia', 'Karina', 'Gustavo', 'Alicia', 'Lia', 'Franco'];
+      const shuffled = [...participants].sort(() => Math.random() - 0.5);
+      const pairs = {};
+      participants.forEach((person, index) => {
+        pairs[person] = shuffled[index];
+      });
+      return pairs;
+    })();
+
+    const santaPairs = fixedSantaPairs;
 
     const genders = {
       'Guillermo': 'amigo',
@@ -119,7 +121,7 @@
         return;
       }
 
-      if (localStorage.getItem('newSecretSanta')) {
+      if (localStorage.getItem('newSecretSantaFV')) {
         alert('Ya ingresaste tu nombre.');
         return;
       }
@@ -131,7 +133,7 @@
         return;
       }
 
-      localStorage.setItem('newSecretSanta', mappedName);
+      localStorage.setItem('newSecretSantaFV', mappedName);
 
       const recipient = santaPairs[mappedName];
       const gender = genders[mappedName];
@@ -145,7 +147,7 @@
 
     // Check if already participated
     window.onload = function() {
-      const savedName = localStorage.getItem('newSecretSanta');
+      const savedName = localStorage.getItem('newSecretSantaFV');
       if (savedName) {
         const recipient = santaPairs[savedName];
         const gender = genders[savedName];
