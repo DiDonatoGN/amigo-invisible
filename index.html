@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret Santa</title>
+  <title>Amigo invisible</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -71,10 +72,10 @@
       'gusti': 'Gustavo',
       'flaca': 'Alicia',
       'ali': 'Alicia',
-      'lia': 'Quimey',
-      'quimey': 'Quimey',
-      'li': 'Quimey',
-      'lili': 'Quimey',
+      'lia': 'Lia',
+      'quimey': 'Lia',
+      'li': 'Lia',
+      'lili': 'Lia',
       'fran': 'Franco',
       'franquito': 'Franco'
     };
@@ -84,9 +85,9 @@
       'Sofia': 'Lucia',
       'Lucia': 'Franco',
       'Karina': 'Alicia',
-      'Gustavo': 'Quimey',
+      'Gustavo': 'Lia',
       'Alicia': 'Guillermo',
-      'Quimey': 'Sofia',
+      'Lia': 'Sofia',
       'Franco': 'Gustavo'
     };
 
@@ -97,7 +98,7 @@
       'Lucia': 'amiga',
       'Gustavo': 'amigo',
       'Alicia': 'amiga',
-      'Quimey': 'amiga',
+      'Lia': 'amiga',
       'Franco': 'amigo'
     };
 
@@ -135,7 +136,7 @@
       const recipient = santaPairs[mappedName];
       const gender = genders[mappedName];
 
-      document.getElementById('message').textContent = `${mappedName}, sos el/la ${gender} invisible de:`;
+      document.getElementById('message').textContent = `${mappedName}, sos ${gender === 'amigo' ? 'el amigo' : 'la amiga'} invisible de:`;
       document.getElementById('santaName').textContent = recipient;
 
       document.getElementById('inputCard').style.display = 'none';
@@ -149,7 +150,7 @@
         const recipient = santaPairs[savedName];
         const gender = genders[savedName];
 
-        document.getElementById('message').textContent = `${savedName}, sos el/la ${gender} invisible de:`;
+        document.getElementById('message').textContent = `${savedName}, sos ${gender === 'amigo' ? 'el amigo' : 'la amiga'} invisible de:`;
         document.getElementById('santaName').textContent = recipient;
 
         document.getElementById('inputCard').style.display = 'none';
