@@ -45,15 +45,15 @@
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="card" id="inputCard">
     <h2>Secret Santa</h2>
     <p>Ingresa tu nombre como figura en el DNI:</p>
     <input type="text" id="nameInput" placeholder="Tu nombre">
     <button onclick="generateSecretSanta()">Siguiente</button>
-    <div id="result" style="display: none;">
-      <h3 id="message"></h3>
-      <h1 id="santaName"></h1>
-    </div>
+  </div>
+  <div class="card" id="result" style="display: none;">
+    <h3 id="message"></h3>
+    <h1 id="santaName"></h1>
   </div>
 
   <script>
@@ -138,8 +138,25 @@
 
       document.getElementById('message').textContent = `${mappedName}, sos ${gender} amigo/a invisible de:`;
       document.getElementById('santaName').textContent = recipient;
+
+      document.getElementById('inputCard').style.display = 'none';
       document.getElementById('result').style.display = 'block';
     }
+
+    // Check if already participated
+    window.onload = function() {
+      const savedName = localStorage.getItem('secretSanta');
+      if (savedName) {
+        const recipient = santaPairs[savedName];
+        const gender = genders[savedName];
+
+        document.getElementById('message').textContent = `${savedName}, sos ${gender} amigo/a invisible de:`;
+        document.getElementById('santaName').textContent = recipient;
+
+        document.getElementById('inputCard').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+      }
+    };
   </script>
 </body>
 </html>
