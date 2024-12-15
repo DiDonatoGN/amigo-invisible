@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Santa</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fef6e4;
+      color: #2e7d32;
+      text-align: center;
+      padding: 20px;
+    }
+    h1, h3 {
+      margin: 20px 0;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #1b5e20;
+    }
+    input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: 2px solid #2e7d32;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Secret Santa</h2>
+    <p>Ingresa tu nombre como figura en el DNI:</p>
+    <input type="text" id="nameInput" placeholder="Tu nombre">
+    <button onclick="generateSecretSanta()">Siguiente</button>
+    <div id="result" style="display: none;">
+      <h3 id="message"></h3>
+      <h1 id="santaName"></h1>
+    </div>
+  </div>
+
+  <script>
+    const nameMapping = {
+      'guille': 'Guillermo',
+      'sofi': 'Sofia',
+      'sofy': 'Sofia',
+      'so': 'Sofia',
+      'lu': 'Lucia',
+      'luchi': 'Lucia',
+      'lucha': 'Lucia',
+      'lulu': 'Lucia',
+      'kary': 'Karina',
+      'kari': 'Karina',
+      'gus': 'Gustavo',
+      'gusti': 'Gustavo',
+      'flaca': 'Alicia',
+      'ali': 'Alicia',
+      'lia': 'Quimey',
+      'quimey': 'Quimey',
+      'li': 'Quimey',
+      'lili': 'Quimey',
+      'fran': 'Franco',
+      'franquito': 'Franco'
+    };
+
+    const santaPairs = {
+      'Guillermo': 'Karina',
+      'Sofia': 'Lucia',
+      'Lucia': 'Franco',
+      'Karina': 'Alicia',
+      'Gustavo': 'Quimey',
+      'Alicia': 'Guillermo',
+      'Quimey': 'Sofia',
+      'Franco': 'Gustavo'
+    };
+
+    const genders = {
+      'Guillermo': 'el',
+      'Karina': 'la',
+      'Sofia': 'la',
+      'Lucia': 'la',
+      'Gustavo': 'el',
+      'Alicia': 'la',
+      'Quimey': 'la',
+      'Franco': 'el'
+    };
+
+    function normalizeName(name) {
+      return name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .replace(/\s+/g, '');
+    }
+
+    function generateSecretSanta() {
+      const inputName = document.getElementById('nameInput').value;
+      const normalizedName = normalizeName(inputName);
+
+      if (!inputName) {
+        alert('Por favor, ingresa un nombre.');
+        return;
+      }
+
+      if (localStorage.getItem('secretSanta')) {
+        alert('Ya ingresaste tu nombre.');
+        return;
+      }
+
+      const mappedName = nameMapping[normalizedName];
+
+      if (!mappedName) {
+        alert('Nombre no encontrado en la lista. Intenta nuevamente.');
+        return;
+      }
+
+      localStorage.setItem('secretSanta', mappedName);
+
+      const recipient = santaPairs[mappedName];
+      const gender = genders[mappedName];
+
+      document.getElementById('message').textContent = `${mappedName}, sos ${gender} amigo/a invisible de:`;
+      document.getElementById('santaName').textContent = recipient;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
